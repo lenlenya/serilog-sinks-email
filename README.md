@@ -17,3 +17,15 @@ var log = new LoggerConfiguration()
 ```
 
 An overload accepting `EmailConnectionInfo` can be used to specify advanced options.
+
+
+重新编译了项目，以处理MailKit版本依赖问题。
+在实际开发中，我们引用了一个组件A，它依赖MailKit>=3.4.1,然后就触发了此组件的依赖错误：
+> Exception while emitting periodic batch from Serilog.Sinks.PeriodicBatching.PeriodicBatchingSink: System.MissingMethodExce
+ption: Method not found: 'System.Threading.Tasks.Task MailKit.MailTransport.SendAsync(MimeKit.MimeMessage, System.Threading.CancellationToken, MailKit.
+ITransferProgress)'.
+   at Serilog.Sinks.Email.EmailSink.EmitBatchAsync(IEnumerable`1 events)
+   at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)
+   at Serilog.Sinks.Email.EmailSink.EmitBatchAsync(IEnumerable`1 events)
+   at Serilog.Sinks.PeriodicBatching.PeriodicBatchingSink.OnTick()
+
